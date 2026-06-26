@@ -1,7 +1,7 @@
 {
-  "name": "luflex-dashboard-env",
-  "description": "Dependencias de Node-RED para Luflex",
+  "name": "luflex-iot-infra",
   "version": "1.0.0",
+  "description": "Infraestructura IoT Luflex con dependencias automáticas",
   "dependencies": {
     "node-red-dashboard": "^3.6.5"
   }

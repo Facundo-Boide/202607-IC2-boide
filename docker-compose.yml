@@ -18,14 +18,14 @@ services:
   nodered_luflex:
     image: nodered/node-red:latest
     container_name: nodered
-    user: "root"  # 🌟 Evita cualquier problema de permisos en la PC del profe
+    user: "root"
     ports:
       - "1880:1880"
     volumes:
       - nodered_data:/data
       - ./flows.json:/data/flows.json
-    command: >
-      bash -c "npm install node-red-dashboard && ./entrypoint.sh"
+    # 🚀 RUTA CORREGIDA: Se para en la carpeta del proyecto, instala local y arranca de forma nativa
+    entrypoint: ["bash", "-c", "cd /usr/src/node-red && npm install node-red-dashboard && ./entrypoint.sh"]
     restart: always
     networks:
       - luflex_net
