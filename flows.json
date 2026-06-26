@@ -1,0 +1,539 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "40aa44457ecfdd1f",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "facu/luflex/ldr",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "b38739153eca88bc",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "5170f90efb05aab3",
+                "a6aef0dae02c4a72"
+            ]
+        ]
+    },
+    {
+        "id": "5170f90efb05aab3",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.promedio",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 200,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "8c556686aee5fdec",
+        "type": "ui_chart",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "b32176ddd6045857",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "0",
+        "ymax": "4095",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#5b248f",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 410,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a6aef0dae02c4a72",
+        "type": "json",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload.promedio",
+        "action": "",
+        "pretty": false,
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "da733faf2ea0af73"
+            ]
+        ]
+    },
+    {
+        "id": "da733faf2ea0af73",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 1",
+        "func": "msg.payload = msg.payload.promedio;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 400,
+        "wires": [
+            [
+                "8c556686aee5fdec"
+            ]
+        ]
+    },
+    {
+        "id": "b44628168bd3220f",
+        "type": "ui_dropdown",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "label": "Modo de operacion",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "12d8b313e5ec676c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Automatico 1",
+                "value": "auto1",
+                "type": "str"
+            },
+            {
+                "label": "Automatico2",
+                "value": "auto2",
+                "type": "str"
+            },
+            {
+                "label": "manual",
+                "value": "manual",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 110,
+        "y": 640,
+        "wires": [
+            [
+                "26a633ea1ec13492",
+                "41e5a6503949580b"
+            ]
+        ]
+    },
+    {
+        "id": "41e5a6503949580b",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "facu/luflex/modo",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b38739153eca88bc",
+        "x": 320,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "04b7fadd4632bada",
+        "type": "ui_button",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "12d8b313e5ec676c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "abrir cortina",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "ABRIR",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 880,
+        "wires": [
+            [
+                "3036c3025a68e409"
+            ]
+        ]
+    },
+    {
+        "id": "91ce50e88ffc7050",
+        "type": "ui_button",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "12d8b313e5ec676c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "cerrar cortina",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "CERRAR",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 210,
+        "y": 940,
+        "wires": [
+            [
+                "3036c3025a68e409"
+            ]
+        ]
+    },
+    {
+        "id": "265e78cad0a9e4db",
+        "type": "ui_slider",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "label": "Posicion deseada",
+        "tooltip": "",
+        "group": "12d8b313e5ec676c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "100",
+        "step": "5",
+        "className": "",
+        "x": 210,
+        "y": 1040,
+        "wires": [
+            [
+                "146281cbfdd5577f"
+            ]
+        ]
+    },
+    {
+        "id": "3036c3025a68e409",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "facu/luflex/comando",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b38739153eca88bc",
+        "x": 480,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "146281cbfdd5577f",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "facu/luflex/posicion",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b38739153eca88bc",
+        "x": 490,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "bf16f1635ceb3ab8",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "facu/luflex/status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "b38739153eca88bc",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 1160,
+        "wires": [
+            [
+                "f4360ec087b709c3",
+                "4d88e3ffcadc5a7b"
+            ]
+        ]
+    },
+    {
+        "id": "f4360ec087b709c3",
+        "type": "ui_text",
+        "z": "f6f2187d.f17ca8",
+        "group": "49f4db644bfb11b0",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "ultima respuesta del ESP32",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 480,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "4d88e3ffcadc5a7b",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 300,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "26a633ea1ec13492",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Manual",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 310,
+        "y": 640,
+        "wires": [
+            [
+                "e21f640ee8bb4ff9"
+            ],
+            [
+                "8fa61ae954378c46"
+            ]
+        ]
+    },
+    {
+        "id": "e21f640ee8bb4ff9",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "visible",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8fa61ae954378c46",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "visible",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b38739153eca88bc",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "10.103.30.91",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b32176ddd6045857",
+        "type": "ui_group",
+        "name": "Graficos",
+        "tab": "3cc04da9828e5628",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "12d8b313e5ec676c",
+        "type": "ui_group",
+        "name": "Controles ",
+        "tab": "3cc04da9828e5628",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "49f4db644bfb11b0",
+        "type": "ui_group",
+        "name": "estado",
+        "tab": "3cc04da9828e5628",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3cc04da9828e5628",
+        "type": "ui_tab",
+        "name": "Luflex Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c3fbad6b3c449127",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

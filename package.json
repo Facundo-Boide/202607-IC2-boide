@@ -1,0 +1,8 @@
+{
+  "name": "luflex-dashboard-env",
+  "description": "Dependencias de Node-RED para Luflex",
+  "version": "1.0.0",
+  "dependencies": {
+    "node-red-dashboard": "^3.6.5"
+  }
+}
