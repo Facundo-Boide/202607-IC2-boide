@@ -18,7 +18,7 @@ Antes de inicializar el entorno, asegúrese de tener instalado:
 El despliegue se compone de dos servicios interconectados dentro de una red puente aislada (`luflex_net`):
 
 1. **`broker_mqtt` (Eclipse Mosquitto)**: Servidor de mensajería encargado de centralizar el tráfico de datos. Está configurado para escuchar de forma pública en la red local a través del puerto `1883` con acceso anónimo habilitado, permitiendo el acople directo del hardware físico (ESP32) y de Node-RED.
-2. **`nodered_luflex` (Node-RED)**: Motor de flujos y servidor del Dashboard web (mapeado en el puerto `1880`). Utiliza persistencia de datos indexada en volúmenes de Docker, por lo que los flujos y las configuraciones no se pierden al reiniciar o detener los contenedores.
+2. **`nodered_luflex` (Node-RED)**: Motor de flujos y servidor del Dashboard web (mapeado en el puerto `1880`). Utiliza persistencia de datos indexada en volúmenes de Docker, por lo que los flujos y las configuraciones no se pierden al reiniciar o detener los contenedores. Este podras verlo reflejado en http://localhost:1880/ui
 
 ---
 
